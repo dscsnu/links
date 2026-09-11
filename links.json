@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "SNU",
+      "links": [
+        { "id": 46, "name": "University ERP", "tag": "Academics", "icon": "building", "url": "https://prodweb.snu.in/psp/CSPROD/EMPLOYEE/HRMS/?cmd=login" },
+        { "id": 51, "name": "Assistantship / Award", "tag": "Academics", "icon": "award", "url": "https://stipendapprovals.webapps.snu.edu.in/StipendV3/public/login/login/index" },
+        { "id": 52, "name": "Blackboard", "tag": "Academics", "icon": "presentation", "url": "https://blackboard.snu.edu.in/" },
+        { "id": 54, "name": "CCT", "tag": "Academics", "icon": "clipboardCheck", "url": "https://app01.webapps.snu.edu.in/curricular/co_login" },
+        { "id": 55, "name": "Certificate Issuance", "tag": "Academics", "icon": "file", "url": "https://cgs.webapps.snu.edu.in/login" },
+        { "id": 56, "name": "Course Evaluation Survey", "tag": "Academics", "icon": "clipboardList", "url": "https://ces.webapps.snu.edu.in/authsaml/index/login" },
+        { "id": 71, "name": "Student Outbound Mobility", "tag": "Academics", "icon": "globe", "url": "https://app01.webapps.snu.edu.in/mobility" },
+        { "id": 72, "name": "Student Attendance Recording", "tag": "Academics", "icon": "checkCircle", "url": "https://markattendance.webapps.snu.edu.in/application/login/login" },
+        { "id": 73, "name": "Student Attendance Management", "tag": "Academics", "icon": "userCheck", "url": "https://attendance.webapps.snu.edu.in/" },
+        { "id": 74, "name": "Student Clearance", "tag": "Academics", "icon": "clipboardCheck", "url": "https://scs.webapps.snu.edu.in/StudentClearanceSystem/public/application/login" },
+        { "id": 58, "name": "Event Repository", "tag": "Campus Life", "icon": "calendar", "url": "https://app01.webapps.snu.edu.in/event/event" },
+        { "id": 61, "name": "Hostel Management", "tag": "Campus Life", "icon": "bed", "url": "https://hms.webapps.snu.edu.in/hostel/public/snuhostel/login/login" },
+        { "id": 62, "name": "ID Card Management", "tag": "Campus Life", "icon": "idCard", "url": "https://idm.webapps.snu.edu.in/IDC/index.php" },
+        { "id": 66, "name": "Mobile App CMS", "tag": "Campus Life", "icon": "phone", "url": "https://m.snu.edu.in/index.php/auth_panel/login" },
+        { "id": 67, "name": "On Campus Job", "tag": "Campus Life", "icon": "briefcase", "url": "https://ocj.webapps.snu.edu.in/public/login" },
+        { "id": 76, "name": "Student Payment Center", "tag": "Campus Life", "icon": "card", "url": "https://feepayment.webapps.snu.edu.in/payment/index/index" },
+        { "id": 57, "name": "Doctoral Portal", "tag": "Research", "icon": "cap", "url": "https://doctoralportal.webapps.snu.edu.in/" },
+        { "id": 49, "name": "Anti-Ragging Compliance", "tag": "Compliance", "icon": "shieldCheck", "url": "https://feepayment.webapps.snu.edu.in/antiragging/index/index" },
+        { "id": 60, "name": "Student Grievance Portal", "tag": "Compliance", "icon": "flag", "url": "https://snu.digiicampus.com" }
+      ]
+    },
+    {
+      "name": "Resources",
+      "links": [
+        { "name": "Student Policy", "tag": "Policy", "icon": "shield", "url": "https://snulinks.snu.edu.in/policies/student-policies" },
+        { "name": "Student Handbook", "tag": "Policy", "icon": "book", "url": "https://snu.edu.in/site/assets/files/24802/student_handbook_2026_final_1.pdf?v=2" },
+        { "name": "Academic Research", "tag": "Policy", "icon": "flask", "url": "https://snulinks.snu.edu.in/policies/academic" },
+        { "name": "University Library", "tag": "Library", "icon": "layers", "url": "https://library.snu.edu.in/" },
+        { "name": "SNU Wiki", "tag": "Reference", "icon": "globe", "url": "https://wiki.snu.edu.in/index.php?title=Main_Page" },
+        { "name": "Shiv Nadar University", "tag": "Reference", "icon": "landmark", "url": "https://snu.edu.in/home/" }
+      ]
+    },
+    {
+      "name": "External",
+      "links": [
+        { "name": "Scooby", "tag": "rohitjg.com", "icon": "compass", "url": "https://scooby.rohitjg.com" },
+        { "name": "Snoopy", "tag": "rohitjg.com", "icon": "map", "url": "https://maps.rohitjg.com" },
+        { "name": "rslookup", "tag": "abs.moe", "icon": "search", "url": "https://rslookup.abs.moe" }
+      ]
+    }
+  ]
+}
