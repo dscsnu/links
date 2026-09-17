@@ -46,3 +46,9 @@ directory `.`. Same story for Netlify, GitHub Pages, or any static host.
 ## Keyboard
 
 `/` or `⌘K` focuses search, `Enter` opens the top result, `Esc` clears.
+
+## Pins
+
+Use the pin button on a row to keep a link in the `Pinned` group at the top.
+Pins are stored locally in the browser, so they persist between visits on the
+same device.
