@@ -27,13 +27,16 @@ const ICONS = {
   compass: '<circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2.4 6.4-6.4 2.4 2.4-6.4 6.4-2.4z"/>',
   map: '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
   search: '<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>',
+  pin: '<path d="M12 17v5"/><path d="M8 3h8l-1 6 3 3v2H6v-2l3-3-1-6z"/>',
   link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
 };
 
 const listEl = document.querySelector('#list');
 const input = document.querySelector('#q');
+const PINNED_STORAGE_KEY = 'pinned-links';
 
 let groups = [];
+let pinned = readPinned();
 
 fetch('links.json')
   .then((r) => {
@@ -43,7 +46,11 @@ fetch('links.json')
   .then((data) => {
     groups = data.groups.map((g) => ({
       name: g.name,
-      links: g.links.map((l) => ({ ...l, haystack: [l.name, l.tag, l.url, g.name].join(' ').toLowerCase() })),
+      links: g.links.map((l) => ({
+        ...l,
+        key: l.url,
+        haystack: [l.name, l.tag, l.url, g.name].join(' ').toLowerCase(),
+      })),
     }));
     render(input.value);
   })
@@ -54,17 +61,18 @@ fetch('links.json')
 function render(query) {
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const matches = (l) => terms.every((t) => l.haystack.includes(t));
+  const pinnedLinks = groups.flatMap((g) => g.links.filter((l) => pinned.has(l.key) && matches(l)));
 
   const visible = groups
-    .map((g) => ({ name: g.name, links: g.links.filter(matches) }))
+    .map((g) => ({ name: g.name, links: g.links.filter((l) => !pinned.has(l.key) && matches(l)) }))
     .filter((g) => g.links.length);
 
-  if (!visible.length) {
+  if (!pinnedLinks.length && !visible.length) {
     listEl.innerHTML = '<p class="empty">No links match “' + escape(query.trim()) + '”.</p>';
     return;
   }
 
-  listEl.innerHTML = visible.map(groupHtml).join('');
+  listEl.innerHTML = (pinnedLinks.length ? groupHtml({ name: 'Pinned', links: pinnedLinks }) : '') + visible.map(groupHtml).join('');
 }
 
 function groupHtml(g) {
@@ -77,13 +85,19 @@ function groupHtml(g) {
 }
 
 function rowHtml(l) {
+  const isPinned = pinned.has(l.key);
   return (
-    '<a class="row" href="' + escape(l.url) + '" target="_blank" rel="noopener noreferrer">' +
-      '<span class="ico">' + svg(16, ICONS[l.icon] || ICONS.link, 1.7) + '</span>' +
-      '<span class="name">' + escape(l.name) + '</span>' +
-      (l.tag ? '<span class="tag">' + escape(l.tag) + '</span>' : '') +
-      svg(14, '<path d="M7 17L17 7"/><path d="M8 7h9v9"/>', 2, 'arrow') +
-    '</a>'
+    '<div class="row">' +
+      '<a class="row-link" href="' + escape(l.url) + '" target="_blank" rel="noopener noreferrer">' +
+        '<span class="ico">' + svg(16, ICONS[l.icon] || ICONS.link, 1.7) + '</span>' +
+        '<span class="name">' + escape(l.name) + '</span>' +
+        (l.tag ? '<span class="tag">' + escape(l.tag) + '</span>' : '') +
+        svg(14, '<path d="M7 17L17 7"/><path d="M8 7h9v9"/>', 2, 'arrow') +
+      '</a>' +
+      '<button class="pin" type="button" data-pin="' + escape(l.key) + '" aria-label="' + (isPinned ? 'Unpin ' : 'Pin ') + escape(l.name) + '">' +
+        svg(15, ICONS.pin, 1.8) +
+      '</button>' +
+    '</div>'
   );
 }
 
@@ -100,6 +114,31 @@ function escape(s) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   }[c]));
 }
+
+function readPinned() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PINNED_STORAGE_KEY));
+    return new Set(Array.isArray(saved) ? saved : []);
+  } catch (e) {
+    return new Set();
+  }
+}
+
+function togglePin(key) {
+  if (pinned.has(key)) pinned.delete(key);
+  else pinned.add(key);
+
+  try {
+    localStorage.setItem(PINNED_STORAGE_KEY, JSON.stringify([...pinned]));
+  } catch (e) {}
+  render(input.value);
+}
+
+listEl.addEventListener('click', (e) => {
+  const button = e.target.closest('[data-pin]');
+  if (!button) return;
+  togglePin(button.dataset.pin);
+});
 
 input.addEventListener('input', () => render(input.value));
 
